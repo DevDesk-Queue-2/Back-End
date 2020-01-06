@@ -8,7 +8,7 @@ exports.up = function(knex) {
       .unique();
     users.string("password").notNullable();
     users.string("email");
-    users.date("created").notNullable();
+    users.string("created").notNullable();
   });
 };
 
