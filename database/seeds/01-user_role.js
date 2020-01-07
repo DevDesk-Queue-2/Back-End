@@ -8,9 +8,10 @@ exports.seed = function(knex) {
         { id: 1, user_id: 1, role_id: 1 },
         { id: 2, user_id: 2, role_id: 2 }
       ]);
-    }).then(() => {
+    })
+    .then(() => {
       if (process.env.DB_ENV === "production") {
-        knex.raw("select setval('id', max(id)) from user_role");
+        knex.raw(`select setval('id', (select max(id) from user_role)`);
       }
     });
 };

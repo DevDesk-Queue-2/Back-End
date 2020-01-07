@@ -36,7 +36,7 @@ exports.seed = function(knex) {
     })
     .then(() => {
       if (process.env.DB_ENV === "production") {
-        knex.raw("select setval('id', max(id)) from users");
+        knex.raw(`select setval('id', (select max(id) from users)`);
       }
     });
 };
