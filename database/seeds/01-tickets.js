@@ -25,5 +25,10 @@ exports.seed = function(knex) {
           category_id: 2
         }
       ]);
+    })
+    .then(() => {
+      if (process.env.DB_ENV === "production") {
+        knex.raw("select setval('id', max(id)) from tickets");
+      }
     });
 };
