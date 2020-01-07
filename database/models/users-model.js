@@ -24,8 +24,14 @@ const remove = id => {
     .where({ id });
 };
 
+const update = user => {
+  const { id } = user;
+  return db(`users`).where({id}).update({...user}).then(() => db(`users`).where({ id }).first());
+};
+
 module.exports = {
   find,
   add,
-  remove
+  remove,
+  update
 };
