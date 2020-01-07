@@ -12,7 +12,7 @@ exports.seed = function(knex) {
     })
     .then(() => {
       if (process.env.DB_ENV === "production") {
-        knex.raw("select setval('id', max(id)) from ticket_status");
+        knex.raw(`select setval('id', (select max(id) from ticket_status)`);
       }
     });
 };

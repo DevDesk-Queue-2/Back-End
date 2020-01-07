@@ -14,8 +14,7 @@ exports.seed = function(knex) {
     })
     .then(() => {
       if (process.env.DB_ENV === "production") {
-        console.log(`running fix`);
-        knex.raw(`select setval('id', max(id)) from categories`);
+        knex.raw(`select setval('id', (select max(id) from categories)`);
       }
     });
 };
