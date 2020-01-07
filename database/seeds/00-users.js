@@ -33,5 +33,10 @@ exports.seed = function(knex) {
           created: "1/7/2020"
         }
       ]);
+    })
+    .then(() => {
+      if (process.env.DB_ENV === "production") {
+        knex.raw("select setval('id', max(id)) from users");
+      }
     });
 };

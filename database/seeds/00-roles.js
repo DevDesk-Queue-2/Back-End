@@ -9,5 +9,10 @@ exports.seed = function(knex) {
         { id: 2, role: "Helper" },
         { id: 3, role: "admin" }
       ]);
+    })
+    .then(() => {
+      if (process.env.DB_ENV === "production") {
+        knex.raw("select setval('id', max(id)) from roles");
+      }
     });
 };

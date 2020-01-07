@@ -9,5 +9,10 @@ exports.seed = function(knex) {
         { id: 2, status: "In Progress" },
         { id: 3, status: "Complete" }
       ]);
+    })
+    .then(() => {
+      if (process.env.DB_ENV === "production") {
+        knex.raw("select setval('id', max(id)) from ticket_status");
+      }
     });
 };
