@@ -10,6 +10,7 @@ exports.up = function(knex) {
     .createTable("user_role", ur => {
       ur.increments();
       ur.integer("user_id")
+        .unique()
         .unsigned()
         .notNullable()
         .references("id")

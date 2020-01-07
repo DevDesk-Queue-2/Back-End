@@ -7,7 +7,7 @@ exports.up = function(knex) {
         .notNullable()
         .unique();
       priorities
-        .integer("severity")
+        .integer("level")
         .unsigned()
         .notNullable()
         .unique();
@@ -18,15 +18,30 @@ exports.up = function(knex) {
         .notNullable()
         .unique();
     })
+    .createTable("categories", categories => {
+      categories.increments();
+      categories
+        .string("category")
+        .notNullable()
+        .unique();
+    })
     .createTable("tickets", tickets => {
       tickets.increments();
       tickets.string("title").notNullable();
       tickets.string("description").notNullable();
       tickets
-        .integer("severity_level")
+        .integer("category_id")
         .unsigned()
         .notNullable()
-        .references("severity")
+        .references("id")
+        .inTable("categories")
+        .onUpdate("CASCADE")
+        .onDelete("RESTRICT");
+      tickets
+        .integer("priority_level")
+        .unsigned()
+        .notNullable()
+        .references("level")
         .inTable("priorities")
         .onUpdate("CASCADE")
         .onDelete("RESTRICT");
@@ -39,7 +54,7 @@ exports.up = function(knex) {
         .onUpdate("CASCADE")
         .onDelete("RESTRICT");
       tickets
-        .integer("owner")
+        .integer("user_id")
         .unsigned()
         .notNullable()
         .references("id")
@@ -52,6 +67,7 @@ exports.up = function(knex) {
 exports.down = function(knex, Promise) {
   return knex.schema
     .dropTableIfExists("tickets")
+    .dropTableIfExists("categories")
     .dropTableIfExists("ticket_status")
     .dropTableIfExists("priorities");
 };
