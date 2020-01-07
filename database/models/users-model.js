@@ -1,6 +1,6 @@
 const db = require(`../dbConfig`);
 
-const find = username => {
+const find = (username = undefined) => {
   return db(`users`).modify(qb => {
     if (username) {
       qb.where({ username }).first();

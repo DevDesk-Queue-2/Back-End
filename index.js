@@ -1,4 +1,4 @@
-console.log(require(`dotenv`).config({ silent: true }));
+require(`dotenv`).config({ silent: true });
 const server = require("./api/server.js");
 
 const PORT = process.env.PORT || 3300;
