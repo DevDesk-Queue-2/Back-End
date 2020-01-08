@@ -50,12 +50,13 @@ router.put(`/:id`, (req, res) => {
   const { title, description, level, status_id } = req.body;
   const priority_level = level;
 
-  const fieldsToUpdate = Object.keys({
+  const fieldsToUpdate = {
     title,
     description,
     priority_level,
     status_id
-  }).forEach(key => obj[key] === undefined && delete obj[key]);
+  }
+  Object.keys(fieldsToUpdate).forEach(key => fieldsToUpdate[key] === undefined && delete fieldsToUpdate[key]);
 
   Tickets.update({ id: req.params.id, ...fieldsToUpdate })
     .then(ticket => res.status(202).json({ ticket }))
