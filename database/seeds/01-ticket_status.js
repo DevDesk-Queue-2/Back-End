@@ -5,9 +5,9 @@ exports.seed = function(knex) {
     .then(function() {
       // Inserts seed entries
       return knex("ticket_status").insert([
-        { id: 1, status: "New" },
-        { id: 2, status: "In Progress" },
-        { id: 3, status: "Complete" }
+        { status: "New" },
+        { status: "In Progress" },
+        { status: "Complete" }
       ]);
     })
     .then(() => {

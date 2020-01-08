@@ -5,9 +5,9 @@ exports.seed = function(knex) {
     .then(function() {
       // Inserts seed entries
       return knex("roles").insert([
-        { id: 1, role: "Student" },
-        { id: 2, role: "Helper" },
-        { id: 3, role: "admin" }
+        { role: "Student" },
+        { role: "Helper" },
+        { role: "admin" }
       ]);
     })
     .then(() => {

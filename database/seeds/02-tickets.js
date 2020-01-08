@@ -6,7 +6,6 @@ exports.seed = function(knex) {
       // Inserts seed entries
       return knex("tickets").insert([
         {
-          id: 1,
           title: "Unable to deploy server",
           description: "How to mongodb?",
           priority_level: 5,
@@ -15,7 +14,6 @@ exports.seed = function(knex) {
           category_id: 1
         },
         {
-          id: 2,
           title: "No hyperdrive",
           description:
             "Took heavy damage to rear shields, hyperdrive is offline",
