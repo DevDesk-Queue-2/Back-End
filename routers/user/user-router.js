@@ -64,13 +64,16 @@ router.post("/login", bodyValidation([`username`, `password`]), (req, res) => {
 
 router.put("/", validateToken, (req, res) => {
   const { username, password, email, first_name, last_name } = req.body;
-  const fieldsToUpdate = Object.keys({
+  const fieldsToUpdate = {
     username,
     password,
     email,
     first_name,
     last_name
-  }).forEach(key => obj[key] === undefined && delete obj[key]);
+  };
+  Object.keys(fieldsToUpdate).forEach(
+    key => fieldsToUpdate[key] === undefined && delete fieldsToUpdate[key]
+  );
 
   if (fieldsToUpdate && fieldsToUpdate.password) {
     fieldsToUpdate.password = bcrypt.hashSync(fieldsToUpdate.password, 10);
