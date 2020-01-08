@@ -21,7 +21,8 @@ const find = ({ ticketId, userId } = {}) => {
       "ticket_status.status",
       "priorities.name as priority",
       "tickets.priority_level",
-      "tickets.user_id"
+      "tickets.user_id",
+      "tickets.category_id"
     );
 };
 
