@@ -39,7 +39,7 @@ router.put(`/:id`, (req, res) => {
 });
 
 router.delete(`/:id`, (req, res) => {
-  Priorities.delete(req.params.id)
+  Priorities.remove(req.params.id)
     .then(priority => res.status(200).json({ message: "Deleted Successfully" }))
     .catch(error => res.status(500).json({ errorMessage: error }));
 });

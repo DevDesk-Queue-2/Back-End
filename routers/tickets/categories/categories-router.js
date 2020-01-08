@@ -22,13 +22,16 @@ router.post(`/`, bodyValidation([`category`]), (req, res) => {
 });
 
 router.put(`/:id`, bodyValidation([`category`]), (req, res) => {
-  Categories.update({ id: req.params.id, Categories: req.body.category })
+  Categories.update({ id: req.params.id, category: req.body.category })
     .then(category => res.status(202).json({ category }))
-    .catch(error => res.status(500).json({ errorMessage: error }));
+    .catch(error => {
+      console.error(error);
+      res.status(500).json({ errorMessage: error });
+    });
 });
 
 router.delete(`/:id`, (req, res) => {
-  Categories.delete(req.params.id)
+  Categories.remove(req.params.id)
     .then(category => res.status(200).json({ message: "Deleted Successfully" }))
     .catch(error => res.status(500).json({ errorMessage: error }));
 });

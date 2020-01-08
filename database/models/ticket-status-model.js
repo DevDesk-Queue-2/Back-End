@@ -3,7 +3,7 @@ const db = require(`../dbConfig`);
 const find = (status = undefined) => {
   return db(`ticket_status`).modify(qb => {
     if (status) {
-      qb.where({ status }).first();
+      qb.where({ id: status }).first();
     }
   });
 };
