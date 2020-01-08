@@ -23,40 +23,66 @@ router.get(`/`, (req, res) => {
 router.get(`/:id`, (req, res) => {
   Tickets.find({ ticketId: req.params.id })
     .then(ticket => res.status(200).json({ ticket }))
-    .catch(error => res.status(500).json({ errorMessage: error }));
+    .catch(error => {
+      console.error(error);
+      res.status(500).json({ errorMessage: error });
+    });
 });
 
 router.post(
   `/`,
-  bodyValidation([`title`, `description`, `level`, `status_id`]),
+  bodyValidation([
+    `title`,
+    `description`,
+    `priority_level`,
+    `status_id`,
+    `category_id`
+  ]),
   (req, res) => {
     const { id } = req.token.user;
-    const { title, description, level, status_id } = req.body;
-    const ticketData = {
-      owner: id,
+    const {
       title,
       description,
-      priority_level: level,
-      status_id
+      priority_level,
+      status_id,
+      category_id
+    } = req.body;
+    const ticketData = {
+      user_id: id,
+      title,
+      description,
+      priority_level,
+      status_id,
+      category_id
     };
 
     Tickets.add(ticketData)
       .then(ticket => res.status(201).json({ ticket }))
-      .catch(error => res.status(500).json({ errorMessage: error }));
+      .catch(error => {
+        console.error(error);
+        res.status(500).json({ errorMessage: error });
+      });
   }
 );
 
 router.put(`/:id`, (req, res) => {
-  const { title, description, level, status_id } = req.body;
-  const priority_level = level;
-
+  const {
+    title,
+    description,
+    priority_level,
+    status_id,
+    category_id
+  } = req.body;
   const fieldsToUpdate = {
     title,
     description,
     priority_level,
-    status_id
-  }
-  Object.keys(fieldsToUpdate).forEach(key => fieldsToUpdate[key] === undefined && delete fieldsToUpdate[key]);
+    status_id,
+    category_id
+  };
+  Object.keys(fieldsToUpdate).forEach(
+    key => fieldsToUpdate[key] === undefined && delete fieldsToUpdate[key]
+  );
 
   Tickets.update({ id: req.params.id, ...fieldsToUpdate })
     .then(ticket => res.status(202).json({ ticket }))
@@ -64,7 +90,7 @@ router.put(`/:id`, (req, res) => {
 });
 
 router.delete(`/:id`, (req, res) => {
-  Tickets.delete(req.params.id)
+  Tickets.remove(req.params.id)
     .then(deleted =>
       res.status(200).json({ message: `Deleted ticket ${req.params.id}` })
     )

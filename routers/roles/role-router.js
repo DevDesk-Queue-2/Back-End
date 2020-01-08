@@ -28,8 +28,8 @@ router.put(`/:id`, bodyValidation([`role`]), (req, res) => {
 });
 
 router.delete(`/:id`, (req, res) => {
-  Roles.delete(req.params.id)
-    .then(role => res.status(200).json({ role }))
+  Roles.remove(req.params.id)
+    .then(role => res.status(200).json({ message: `Deleted Successfully` }))
     .catch(error => res.status(500).json({ errorMessage: error }));
 });
 
