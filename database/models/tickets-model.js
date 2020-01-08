@@ -6,7 +6,7 @@ const find = ({ ticketId, userId } = {}) => {
   return db(`tickets`)
     .modify(qb => {
       if (ticketId) {
-        qb.where({ id: ticketId }).first();
+        qb.where({ "tickets.id": ticketId }).first();
       }
       if (userId) {
         qb.where({ user_id: userId });
@@ -25,9 +25,9 @@ const find = ({ ticketId, userId } = {}) => {
     );
 };
 
-const add = ({ title, description, severity_level, status_id, user_id }) => {
+const add = ticketData => {
   return db(`tickets`)
-    .insert({ title, description, severity_level, status_id, user_id }, "id")
+    .insert(ticketData, "id")
     .then(([id]) =>
       db(`tickets`)
         .where({ id })
