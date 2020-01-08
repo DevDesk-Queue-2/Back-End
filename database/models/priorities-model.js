@@ -3,7 +3,7 @@ const db = require(`../dbConfig`);
 const find = (priority = undefined) => {
   return db(`priorities`).modify(qb => {
     if (priority) {
-      qb.where({ priority }).first();
+      qb.where({ id: priority }).first();
     }
   });
 };
