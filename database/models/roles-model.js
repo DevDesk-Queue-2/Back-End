@@ -3,7 +3,7 @@ const db = require(`../dbConfig`);
 const find = (role = undefined) => {
   return db(`roles`).modify(qb => {
     if (role) {
-      qb.where({ role }).first();
+      qb.where({ id: role }).first();
     }
   });
 };
@@ -24,9 +24,9 @@ const remove = id => {
     .where({ id });
 };
 
-const update = role => {
-  const { id } = role;
-  return db(`users`)
+const update = roleData => {
+  const { id, role } = roleData;
+  return db(`roles`)
     .where({ id })
     .update({ role })
     .then(() =>
