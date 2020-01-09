@@ -5,7 +5,7 @@ exports.seed = function(knex) {
     .then(async function() {
       // Inserts seed entries
       return knex("categories").insert([
-        { category: "None" },
+        { category: " None" },
         { category: "React" },
         { category: "JavaScript" },
         { category: "HTML" },
