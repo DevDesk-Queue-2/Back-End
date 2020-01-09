@@ -9,12 +9,23 @@ const validateToken = require(`../../api/middleware/jwt-authorization`);
 const Users = require(`../../database/models/users-model`);
 const Tickets = require(`../../database/models/tickets-model`);
 const Helper = require(`../../database/models/helper-tickets-model`);
+const userRolesRouter = require(`./user-roles/user-roles-router`);
 
 const signToken = payload => {
   return jwt.sign(payload, process.env.secret, {
     expiresIn: "1h"
   });
 };
+
+router.use(
+  "/role",
+  validateToken,
+  function(req, res, next) {
+    req.user = { ...req.token.user };
+    next();
+  },
+  userRolesRouter
+);
 
 router.post(
   "/register",

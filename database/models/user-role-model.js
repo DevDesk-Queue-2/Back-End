@@ -1,15 +1,11 @@
 const db = require(`../dbConfig`);
-const roles = require(`./roles-model`);
 
-const find = (user_id = undefined) => {
-  return db(`user_role`)
-    .modify(qb => {
-      if (user_id) {
-        qb.where({ user_id }).first();
-      }
-    })
-    // .then(user_role => roles.find(user_role.role_id))
-    // .then(role => role.role);
+const find = ({ user_id }) => {
+  return db(`user_role`).modify(qb => {
+    if (user_id) {
+      qb.where({ user_id }).first();
+    }
+  });
 };
 
 const add = ({ user_id, role_id }) => {
@@ -29,13 +25,12 @@ const remove = id => {
 };
 
 const update = ({ user_id, role_id }) => {
-  const { id } = role;
   return db(`user_role`)
-    .where({ id })
-    .update({ user_id, role_id })
+    .where({ user_id })
+    .update({ role_id })
     .then(() =>
       db(`user_role`)
-        .where({ id })
+        .where({ user_id })
         .first()
     );
 };
