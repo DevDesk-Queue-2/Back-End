@@ -26,7 +26,14 @@ const remove = id => {
 
 const update = user => {
   const { id } = user;
-  return db(`users`).where({id}).update({...user}).then(() => db(`users`).where({ id }).first());
+  return db(`users`)
+    .where({ id })
+    .update({ ...user })
+    .then(() =>
+      db(`users`)
+        .where({ id })
+        .first()
+    );
 };
 
 module.exports = {

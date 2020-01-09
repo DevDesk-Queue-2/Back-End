@@ -3,6 +3,7 @@ const router = require("express").Router();
 const ticketStatusRouter = require(`./ticket-status/ticket-status-router`);
 const categoriesRouter = require(`./categories/categories-router`);
 const prioritiesRouter = require(`./priorities/priorities-router`);
+const helperRouter = require(`./helper/helper-router`);
 
 const bodyValidation = require(`../../api/middleware/body-validation`);
 const Tickets = require(`../../database/models/tickets-model`);
@@ -10,6 +11,14 @@ const Tickets = require(`../../database/models/tickets-model`);
 router.use("/categories", categoriesRouter);
 router.use("/status", ticketStatusRouter);
 router.use("/priorities", prioritiesRouter);
+router.use(
+  "/:id/helper",
+  function(req, res, next) {
+    req.ticket_id = req.params.id;
+    next();
+  },
+  helperRouter
+);
 
 router.get(`/`, (req, res) => {
   Tickets.find()
