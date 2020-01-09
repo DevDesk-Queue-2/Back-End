@@ -8,6 +8,7 @@ const validateToken = require(`../../api/middleware/jwt-authorization`);
 
 const Users = require(`../../database/models/users-model`);
 const Tickets = require(`../../database/models/tickets-model`);
+const Helper = require(`../../database/models/helper-tickets-model`);
 
 const signToken = payload => {
   return jwt.sign(payload, process.env.secret, {
@@ -95,6 +96,12 @@ router.get("/tickets", validateToken, (req, res) => {
   Tickets.find({ userId: id })
     .then(tickets => res.status(200).json({ tickets }))
     .catch(error => res.status(500).json(error));
+});
+
+router.get(`/helping`, validateToken, (req, res) => {
+  Helper.find({ user_id: req.token.user.id })
+    .then(helper => res.status(200).json({ helper }))
+    .catch(error => res.status(500).json({ errorMessage: error }));
 });
 
 module.exports = router;
