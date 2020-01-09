@@ -5,6 +5,8 @@ exports.seed = function(knex) {
     .then(function() {
       // Inserts seed entries
       return knex("priorities").insert([
+        { name: " None", level: 0 },
+
         { name: "Low", level: 5 },
         { name: "Medium", level: 3 },
         { name: "High", level: 1 }

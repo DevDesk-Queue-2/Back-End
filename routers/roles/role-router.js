@@ -18,7 +18,10 @@ router.get(`/:id`, (req, res) => {
 router.post(`/`, bodyValidation([`role`]), (req, res) => {
   Roles.add(req.body)
     .then(role => res.status(201).json({ role }))
-    .catch(error => res.status(500).json({ errorMessage: error }));
+    .catch(error => {
+      console.error(error);
+      res.status(500).json({ errorMessage: error });
+    });
 });
 
 router.put(`/:id`, bodyValidation([`role`]), (req, res) => {
