@@ -15,6 +15,12 @@ module.exports = {
     },
     seeds: {
       directory: "./database/seeds"
+    },
+    log: {
+      warn(message) {},
+      error(message) {},
+      deprecate(message) {},
+      debug(message) {}
     }
   },
   testing: {
@@ -33,6 +39,11 @@ module.exports = {
     },
     seeds: {
       directory: "./database/seeds"
+    },
+    log: {
+      warn(message) {},
+      deprecate(message) {},
+      debug(message) {}
     }
   },
   production: {
